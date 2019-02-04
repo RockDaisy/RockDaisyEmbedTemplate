@@ -1,0 +1,92 @@
+<div [@routerTransition]>
+    <form class="k-form-inline" style="width: 550px;" novalidate [formGroup]="form" (ngSubmit)="onSubmit(form.value, form.valid)">
+        <button type="submit" class="k-button k-primary" [disabled]="!form.valid">SUBMIT</button>
+
+        <fieldset>
+            <legend>User Settings</legend>
+
+            <label class="k-form-field">
+                <span>Username <span class="required-validation">*</span></span>
+                <input class="k-textbox"
+                       id="Username"
+                       name="Username"
+                       formControlName="Username"/>
+            </label>
+
+            <div *ngIf="form.controls['Username'].hasError('required') && form.controls['Username'].touched"
+                class="alert alert-danger text-center">Username is required
+            </div>
+
+            <label class="k-form-field" *ngIf="!this.user.RequiredChangingPassword">
+                <span>Change Password?</span>
+                <kendo-switch id="ChangePassword"
+                              [onLabel]="'I'"
+                              [offLabel]="'O'"
+                              name="ChangePassword"
+                              formControlName="ChangePassword"></kendo-switch>
+            </label>
+
+            <div *ngIf="form.controls['ChangePassword'].value">
+                <label class="k-form-field">
+                    <span>Current Password <span class="required-validation">*</span></span>
+                    <input class="k-textbox"
+                           type="password"
+                           id="CurrentPassword"
+                           name="CurrentPassword"
+                           formControlName="CurrentPassword"/>
+                </label>
+
+                <div *ngIf="form.controls['CurrentPassword'].hasError('required') && form.controls['Password'].touched"
+                     class="alert alert-danger text-center">Current Password is required.
+                </div>
+
+                <label class="k-form-field">
+                    <span>New Password <span class="required-validation">*</span></span>
+                    <input class="k-textbox"
+                           type="password"
+                           id="Password"
+                           name="Password"
+                           formControlName="Password"/>
+                </label>
+
+                <div *ngIf="form.controls['Password'].hasError('required') && form.controls['Password'].touched"
+                     class="alert alert-danger text-center">New Password is required.
+                </div>
+
+                <div *ngIf="form.controls['Password'].hasError('validateConfirmPassword') && form.controls['Password'].touched"
+                     class="alert alert-danger text-center">Confirm New Password and New Password should be the same.
+                </div>
+
+                <div
+                    *ngIf="form.controls['Password'].hasError('minlength') && form.controls['Password'].touched"
+                    class="alert alert-danger text-center">Field must be at least 5 characters long.
+                </div>
+
+                <label class="k-form-field">
+                    <span>Confirm New Password <span class="required-validation">*</span></span>
+                    <input class="k-textbox"
+                           type="password"
+                           id="ConfirmPassword"
+                           name="ConfirmPassword"
+                           formControlName="ConfirmPassword"/>
+                </label>
+
+                <div *ngIf="form.controls['ConfirmPassword'].hasError('required') && form.controls['ConfirmPassword'].touched"
+                     class="alert alert-danger text-center">Confirm New Password is required.
+                </div>
+
+                <div *ngIf="form.controls['ConfirmPassword'].hasError('validateConfirmPassword') && form.controls['ConfirmPassword'].touched"
+                     class="alert alert-danger text-center">Confirm New Password and New Password should be the same.
+                </div>
+
+                <div
+                    *ngIf="form.controls['ConfirmPassword'].hasError('minlength') && form.controls['ConfirmPassword'].touched"
+                    class="alert alert-danger text-center">Field must be at least 5 characters long.
+                </div>
+            </div>
+        </fieldset>
+
+        <div *ngIf="inProgress" class="app-progress"><span class="k-i-loading k-icon"></span></div>
+        <div class="error-summary" [hidden]="!error">{{error}}</div>
+    </form>
+</div>

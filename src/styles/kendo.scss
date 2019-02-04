@@ -1,0 +1,25 @@
+$accent: #95a3ac;
+body .k-textbox {
+    height: calc(1.42857143em + (0.2rem * 2));
+}
+
+$font-size: 12px;
+$padding-x: 4px;
+$padding-y: 2px;
+//https://www.telerik.com/kendo-angular-ui/components/styling/theme-default/customization/
+
+
+body .k-multiselect-wrap {
+    padding-right: 0;
+
+    .k-clear-value {
+        display: none!important;
+    }
+
+    li.k-button {
+        float: none;
+        display: flex;
+        justify-content: flex-start;
+        text-align: left;
+    }
+}

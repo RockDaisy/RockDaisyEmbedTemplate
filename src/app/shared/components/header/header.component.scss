@@ -1,0 +1,14 @@
+@import "../../../../styles/variables";
+
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: black;
+
+  &-brand {
+    margin: 0 10px;
+  }
+}

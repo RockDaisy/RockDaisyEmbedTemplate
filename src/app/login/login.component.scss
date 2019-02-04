@@ -1,0 +1,70 @@
+@import "../../styles/variables";
+
+:host {
+  display: block;
+}
+
+.login-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background: url(/assets/images/background.jpg) center center fixed;
+  text-align: center;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content {
+    padding: 3em;
+    box-shadow: 0 0 10px $gray-light;
+    position: relative;
+    width: 300px;
+    background-color: $app-bg-dark;
+    border-radius: 2px;
+
+    .input-lg {
+      height: 46px;
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.3333333;
+      border-radius: 0;
+    }
+
+    .input-underline {
+      background: 0 0;
+      border: none;
+      box-shadow: none;
+      border-bottom: 2px solid rgba(255, 255, 255, .5);
+      color: #FFF;
+      border-radius: 0;
+    }
+
+    .input-underline:focus {
+      border-bottom: 2px solid #fff;
+      box-shadow: none;
+    }
+
+    h1 {
+      font-weight: 300;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 36px;
+
+      small {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    .form-group {
+      padding: 8px 0;
+    }
+
+    .form-content {
+      padding: 15px 0;
+    }
+  }
+}
