@@ -14,7 +14,7 @@
             </label>
 
             <div *ngIf="form.controls['Username'].hasError('required') && form.controls['Username'].touched"
-                class="alert alert-danger text-center">Username is required
+                class="k-tooltip-validation k-invalid-msg text-center">Username is required
             </div>
 
             <label class="k-form-field" *ngIf="!this.user.RequiredChangingPassword">
@@ -37,7 +37,7 @@
                 </label>
 
                 <div *ngIf="form.controls['CurrentPassword'].hasError('required') && form.controls['Password'].touched"
-                     class="alert alert-danger text-center">Current Password is required.
+                     class="k-tooltip-validation k-invalid-msg text-center">Current Password is required.
                 </div>
 
                 <label class="k-form-field">
@@ -50,16 +50,16 @@
                 </label>
 
                 <div *ngIf="form.controls['Password'].hasError('required') && form.controls['Password'].touched"
-                     class="alert alert-danger text-center">New Password is required.
+                     class="k-tooltip-validation k-invalid-msg text-center">New Password is required.
                 </div>
 
                 <div *ngIf="form.controls['Password'].hasError('validateConfirmPassword') && form.controls['Password'].touched"
-                     class="alert alert-danger text-center">Confirm New Password and New Password should be the same.
+                     class="k-tooltip-validation k-invalid-msg text-center">Confirm New Password and New Password should be the same.
                 </div>
 
                 <div
                     *ngIf="form.controls['Password'].hasError('minlength') && form.controls['Password'].touched"
-                    class="alert alert-danger text-center">Field must be at least 5 characters long.
+                    class="k-tooltip-validation k-invalid-msg text-center">Field must be at least 5 characters long.
                 </div>
 
                 <label class="k-form-field">
@@ -72,16 +72,16 @@
                 </label>
 
                 <div *ngIf="form.controls['ConfirmPassword'].hasError('required') && form.controls['ConfirmPassword'].touched"
-                     class="alert alert-danger text-center">Confirm New Password is required.
+                     class="k-tooltip-validation k-invalid-msg text-center">Confirm New Password is required.
                 </div>
 
                 <div *ngIf="form.controls['ConfirmPassword'].hasError('validateConfirmPassword') && form.controls['ConfirmPassword'].touched"
-                     class="alert alert-danger text-center">Confirm New Password and New Password should be the same.
+                     class="k-tooltip-validation k-invalid-msg text-center">Confirm New Password and New Password should be the same.
                 </div>
 
                 <div
                     *ngIf="form.controls['ConfirmPassword'].hasError('minlength') && form.controls['ConfirmPassword'].touched"
-                    class="alert alert-danger text-center">Field must be at least 5 characters long.
+                    class="k-tooltip-validation k-invalid-msg text-center">Field must be at least 5 characters long.
                 </div>
             </div>
         </fieldset>
