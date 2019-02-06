@@ -1,0 +1,18 @@
+@import "../../../../styles/utils";
+
+.filter-wrapper {
+  .k-form-field {
+    margin-bottom: 0;
+    margin-right: 10px;
+    display: inline-flex;
+    width: 250px;
+
+    @include respond-below(sm) {
+      margin-bottom: 10px!important;
+    }
+
+    .k-widget {
+      width: 100%;
+    }
+  }
+}

@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "spinner";
 @import "utils";
-@import "rtl";
 @import "responsive";
 @import "kendo";
 @import "~@progress/kendo-theme-default/scss/all";
@@ -14,7 +13,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border: 0;
   font-size: 100%;
   font: inherit;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
 /* HTML5 display-role reset for older browsers */
 
@@ -47,6 +47,7 @@ table {
 html, body {
   height: 100%;
   color: white;
+  font-family: 'Arial', sans-serif;
 }
 
 html {

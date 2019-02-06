@@ -1,3 +1,42 @@
-form {
-    min-height: 500px;
+@import "../../../styles/utils";
+
+.app-page {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  .views-wrapper {
+    flex: 1;
+    overflow: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    position: relative;
+  }
+}
+
+.app-filters {
+  display: flex;
+  padding: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @include respond-below(sm) {
+    display: block;
+  }
+
+  .app-filter {}
+
+  &__submit {
+    margin-left: 10px;
+
+    @include respond-below(sm) {
+      text-align: right;
+    }
+  }
+}
+
+.k-panelbar {
+  border: 0;
 }

@@ -53,10 +53,13 @@ export class LoginComponent implements OnInit {
       const params = {'grant_type': 'password', 'username': form.login, 'password': form.password};
 
       this.auth.authenticate(params)
-        .pipe(catchError((error: HttpErrorResponse): any => {
-          this.error = error.message;
+        .pipe(catchError((response: HttpErrorResponse): any => {
+          this.error = (response.error && response.error.error_description) ?
+            response.error.error_description :
+            'Server Error. Please try again later.';
+
           this.isInProgress = false;
-          return Observable.throw(error);
+          return Observable.throw(response);
         }))
         .subscribe((user: User) => {
           this.isInProgress = false;

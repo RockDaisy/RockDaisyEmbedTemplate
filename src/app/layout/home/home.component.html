@@ -1,13 +1,25 @@
-<div [@routerTransition]>
-  <div class="iframe-wrapper">
-    <iframe src='http://localhost:5001/view/5447///{ "hideHeaderLogo": true }' frameborder="0" height="600" width="100%"></iframe>
-  </div>
+<div [@routerTransition] class="app-page k-form-inline">
+  <kendo-panelbar>
+    <kendo-panelbar-item [title]="'FILTERS'" expanded="true">
+      <ng-template kendoPanelBarContent>
+        <div class="app-filters">
+          <div *ngFor="let filter of filters" class="app-filter">
+            <app-filter [filter]="filter"></app-filter>
+          </div>
 
-  <div class="iframe-wrapper">
-    <iframe src='http://localhost:5001/view/5439///{ "hideHeaderLogo": true }' frameborder="0" height="600" width="100%"></iframe>
-  </div>
+          <div class="app-filters__submit">
+            <button type="button"
+                    (click)="onFiltersSubmitClick()"
+                    class="k-button k-primary">APPLY</button>
+          </div>
+        </div>
+      </ng-template>
+    </kendo-panelbar-item>
+  </kendo-panelbar>
 
-  <div class="iframe-wrapper">
-    <iframe src='http://localhost:5001/view/5459///{ "hideHeaderLogo": true }' frameborder="0" height="600" width="100%"></iframe>
+  <div class="views-wrapper">
+    <div class="iframe-wrapper" *ngFor="let url of views">
+      <iframe [src]='url' frameborder="0" height="600" width="100%"></iframe>
+    </div>
   </div>
 </div>

@@ -13,11 +13,15 @@ import {
   DataService
 } from './shared/'
 import {NgIdleModule} from '@ng-idle/core';
-import {LayoutModule} from '@progress/kendo-angular-layout';
+import {LayoutModule, PanelBarModule} from '@progress/kendo-angular-layout';
 import {PopupModule} from '@progress/kendo-angular-popup';
 import {InputsModule} from '@progress/kendo-angular-inputs';
 import {NotificationModule} from '@progress/kendo-angular-notification';
-import { MenuModule } from '@progress/kendo-angular-menu';
+import {MenuModule} from '@progress/kendo-angular-menu';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import {FilterModule} from "./shared/components/filter/filter.module";
+
 
 @NgModule({
   declarations: [
@@ -32,10 +36,14 @@ import { MenuModule } from '@progress/kendo-angular-menu';
     NgIdleModule.forRoot(),
 
     LayoutModule,
+    PanelBarModule,
     PopupModule,
     InputsModule,
     NotificationModule,
-    MenuModule
+    MenuModule,
+    DateInputsModule,
+    DropDownsModule,
+    FilterModule
   ],
   providers: [
     AuthService,

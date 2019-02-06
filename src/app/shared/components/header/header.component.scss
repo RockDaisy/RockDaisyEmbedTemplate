@@ -1,14 +1,41 @@
-@import "../../../../styles/variables";
-
+@import "../../../../styles/utils";
 
 .navbar {
   display: flex;
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-  background-color: black;
+  text-transform: uppercase;
 
   &-brand {
     margin: 0 10px;
+  }
+
+  kendo-menu {
+    flex: 1;
+
+    .k-item {
+
+      &.desktop-visible {
+        @include respond-below(sm) {
+          display: none;
+        }
+      }
+
+      &.mobile-visible {
+
+        @include respond-above(sm) {
+          display: none;
+        }
+
+        .k-menu-expand-arrow {
+          display: none;
+        }
+      }
+
+      &.menu-options {
+        margin-left: auto;
+      }
+    }
   }
 }

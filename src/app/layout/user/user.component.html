@@ -1,92 +1,80 @@
-<div [@routerTransition]>
-    <form class="k-form-inline" style="width: 550px;" novalidate [formGroup]="form" (ngSubmit)="onSubmit(form.value, form.valid)">
-        <button type="submit" class="k-button k-primary" [disabled]="!form.valid">SUBMIT</button>
+<div class="user-settings-view k-content" [@routerTransition]>
+  <form class="k-form-inline" novalidate [formGroup]="form"
+        (ngSubmit)="onSubmit(form.value, form.valid)">
+    <button type="submit" class="k-button k-primary" [disabled]="!form.valid">SUBMIT</button>
 
-        <fieldset>
-            <legend>User Settings</legend>
+    <fieldset>
+      <legend>User Settings</legend>
 
-            <label class="k-form-field">
-                <span>Username <span class="required-validation">*</span></span>
-                <input class="k-textbox"
-                       id="Username"
-                       name="Username"
-                       formControlName="Username"/>
-            </label>
+      <label class="k-form-field">
+        <span>Username <span class="required-validation">*</span></span>
+        <input class="k-textbox"
+               id="Username"
+               name="Username"
+               formControlName="Username"/>
+      </label>
 
-            <div *ngIf="form.controls['Username'].hasError('required') && form.controls['Username'].touched"
-                class="k-tooltip-validation k-invalid-msg text-center">Username is required
-            </div>
+      <div *ngIf="form.controls['Username'].hasError('required') && form.controls['Username'].touched"
+           class="k-tooltip-validation k-invalid-msg text-center">Username is required
+      </div>
 
-            <label class="k-form-field" *ngIf="!this.user.RequiredChangingPassword">
-                <span>Change Password?</span>
-                <kendo-switch id="ChangePassword"
-                              [onLabel]="'I'"
-                              [offLabel]="'O'"
-                              name="ChangePassword"
-                              formControlName="ChangePassword"></kendo-switch>
-            </label>
+      <label class="k-form-field">
+        <span>First Name <span class="required-validation">*</span></span>
+        <input class="k-textbox"
+               id="FirstName"
+               name="FirstName"
+               formControlName="FirstName"/>
+      </label>
 
-            <div *ngIf="form.controls['ChangePassword'].value">
-                <label class="k-form-field">
-                    <span>Current Password <span class="required-validation">*</span></span>
-                    <input class="k-textbox"
-                           type="password"
-                           id="CurrentPassword"
-                           name="CurrentPassword"
-                           formControlName="CurrentPassword"/>
-                </label>
+      <div *ngIf="form.controls['FirstName'].hasError('required') && form.controls['FirstName'].touched"
+           class="k-tooltip-validation k-invalid-msg text-center">First Name is required
+      </div>
 
-                <div *ngIf="form.controls['CurrentPassword'].hasError('required') && form.controls['Password'].touched"
-                     class="k-tooltip-validation k-invalid-msg text-center">Current Password is required.
-                </div>
+      <label class="k-form-field">
+        <span>Last Name <span class="required-validation">*</span></span>
+        <input class="k-textbox"
+               id="LastName"
+               name="LastName"
+               formControlName="LastName"/>
+      </label>
 
-                <label class="k-form-field">
-                    <span>New Password <span class="required-validation">*</span></span>
-                    <input class="k-textbox"
-                           type="password"
-                           id="Password"
-                           name="Password"
-                           formControlName="Password"/>
-                </label>
+      <label class="k-form-field">
+        <span>Phone Number</span>
+        <kendo-maskedtextbox mask="+00000000000"
+                             id="PhoneNumber"
+                             name="PhoneNumber"
+                             formControlName="PhoneNumber"></kendo-maskedtextbox>
+      </label>
 
-                <div *ngIf="form.controls['Password'].hasError('required') && form.controls['Password'].touched"
-                     class="k-tooltip-validation k-invalid-msg text-center">New Password is required.
-                </div>
+      <label class="k-form-field">
+        <span>Custom Field</span>
+        <input class="k-textbox"
+               id="CustomField"
+               name="CustomField"
+               formControlName="CustomField"/>
+      </label>
 
-                <div *ngIf="form.controls['Password'].hasError('validateConfirmPassword') && form.controls['Password'].touched"
-                     class="k-tooltip-validation k-invalid-msg text-center">Confirm New Password and New Password should be the same.
-                </div>
+      <div *ngIf="form.controls['LastName'].hasError('required') && form.controls['LastName'].touched"
+           class="k-tooltip-validation k-invalid-msg text-center">Last Name is required
+      </div>
 
-                <div
-                    *ngIf="form.controls['Password'].hasError('minlength') && form.controls['Password'].touched"
-                    class="k-tooltip-validation k-invalid-msg text-center">Field must be at least 5 characters long.
-                </div>
+      <div>
+        <label class="k-form-field">
+          <span>Password <span class="required-validation">*</span></span>
+          <input class="k-textbox"
+                 type="password"
+                 id="Password"
+                 name="Password"
+                 formControlName="Password"/>
+        </label>
 
-                <label class="k-form-field">
-                    <span>Confirm New Password <span class="required-validation">*</span></span>
-                    <input class="k-textbox"
-                           type="password"
-                           id="ConfirmPassword"
-                           name="ConfirmPassword"
-                           formControlName="ConfirmPassword"/>
-                </label>
+        <div *ngIf="form.controls['CurrentPassword'].hasError('required') && form.controls['Password'].touched"
+             class="k-tooltip-validation k-invalid-msg text-center">Current Password is required.
+        </div>
+      </div>
+    </fieldset>
 
-                <div *ngIf="form.controls['ConfirmPassword'].hasError('required') && form.controls['ConfirmPassword'].touched"
-                     class="k-tooltip-validation k-invalid-msg text-center">Confirm New Password is required.
-                </div>
-
-                <div *ngIf="form.controls['ConfirmPassword'].hasError('validateConfirmPassword') && form.controls['ConfirmPassword'].touched"
-                     class="k-tooltip-validation k-invalid-msg text-center">Confirm New Password and New Password should be the same.
-                </div>
-
-                <div
-                    *ngIf="form.controls['ConfirmPassword'].hasError('minlength') && form.controls['ConfirmPassword'].touched"
-                    class="k-tooltip-validation k-invalid-msg text-center">Field must be at least 5 characters long.
-                </div>
-            </div>
-        </fieldset>
-
-        <div *ngIf="inProgress" class="app-progress"><span class="k-i-loading k-icon"></span></div>
-        <div class="error-summary" [hidden]="!error">{{error}}</div>
-    </form>
+    <div *ngIf="inProgress" class="app-progress"><span class="k-i-loading k-icon"></span></div>
+    <div class="error-summary" [hidden]="!error">{{error}}</div>
+  </form>
 </div>

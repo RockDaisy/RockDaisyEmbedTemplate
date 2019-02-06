@@ -1,7 +1,15 @@
 $accent: #00aeef;
 $series-a: #00aeef;
+$base-bg: black;
+$bg-color: #27272e;
+$text-color: white;
+$base-text: white;
+$hovered-text: white;
+$border-color: rgba(255, 255, 255, 0.2);
+$base-border: rgba(255, 255, 255, 0.2);
+$hovered-bg: #43434f;
+$hovered-border: rgba(255, 255, 255, 0.4);
 
-//https://www.telerik.com/kendo-angular-ui/components/styling/theme-default/customization/
 body .k-multiselect-wrap {
     padding-right: 0;
 
@@ -15,4 +23,8 @@ body .k-multiselect-wrap {
         justify-content: flex-start;
         text-align: left;
     }
+}
+
+.k-notification-group {
+  text-transform: uppercase;
 }

@@ -7,6 +7,7 @@ import {HeaderComponent} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {PopupModule} from '@progress/kendo-angular-popup';
 import {MenuModule} from '@progress/kendo-angular-menu';
+import {FilterModule} from "../shared/components/filter/filter.module";
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {MenuModule} from '@progress/kendo-angular-menu';
     FormsModule,
     LayoutRoutingModule,
     PopupModule,
-    MenuModule
+    MenuModule,
+    FilterModule
   ],
   declarations: [
     LayoutComponent,

@@ -1,6 +1,9 @@
 import {Component, OnInit, Injectable} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import { routerTransition } from '../../router.animations';
+import {environment} from "../../../environments/environment";
+import {AppFilter, FilterType} from "../../shared/components/filter/models/filter";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {FiltersService} from "../../shared/services";
 
 @Component({
     selector: 'app-dashboard1-page',
@@ -11,16 +14,70 @@ import { routerTransition } from '../../router.animations';
 
 @Injectable()
 export class Dashboard1Component implements OnInit {
-    public formId = '';
-    public path = '';
+  public API_URL = environment.apiUrl;
+  public filters: Array<AppFilter>;
+  public views: Array<SafeResourceUrl> = [];
 
-    constructor(private route: ActivatedRoute) {}
+  private refreshViews (serializedFilters: string){
+    this.views = [
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/757/${serializedFilters}//{ "hideHeaderLogo": true }`),
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/758/${serializedFilters}//{ "hideHeaderLogo": true }`),
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/759/${serializedFilters}//{ "hideHeaderLogo": true }`)
+    ];
+  }
 
-    ngOnInit() {
-        this.route.params.subscribe(params => {
-            this.formId = params['id'];
-            this.path = params['path'] || '';
-        })
+  constructor(private sanitizer: DomSanitizer, private filtersService: FiltersService) {
+    this.refreshViews('');
+  }
+
+  public onFiltersSubmitClick(){
+    const serializedFilters = this.filtersService.serializeFilters(this.filters);
+
+    if(serializedFilters) {
+      this.refreshViews(serializedFilters);
     }
+  }
+
+  ngOnInit(): void {
+    this.filters = [
+      new AppFilter({
+        Key: '@DateRange',
+        Label: 'Date Range',
+        Type: FilterType.DateRange,
+        Options: {},
+        Value: { start: null, end: null }
+      }),
+
+      new AppFilter({
+        Type: FilterType.DropDown,
+        Key: '@PlayerId',
+        Label: 'Player',
+        Options: {
+          defaultValue: { PlayerId: null, PlayerFullName: 'Select Player...' },
+          textField: 'PlayerFullName',
+          valueField: 'PlayerId',
+          dataSourceId: 125,
+          data: [],
+          source: [],
+        },
+        Value: null
+      }),
+
+      new AppFilter({
+        Type: FilterType.MultiSelect,
+        Key: '@TeamIds',
+        Label: 'Team',
+        Options: {
+          defaultValue: 'Select Team(s)...',
+          textField: 'TeamName',
+          valueField: 'TeamId',
+          dataSourceId: 68,
+          data: [],
+          source: [],
+        },
+        Value: []
+      })
+    ];
+  }
 }
 

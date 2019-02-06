@@ -4,8 +4,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AuthService, ApiService, User} from '../../shared/services';
+import {AuthService, User, DataService} from '../../shared/services';
 import {catchError} from 'rxjs/operators';
+import {NotificationService} from "@progress/kendo-angular-notification";
 
 @Component({
   selector: 'app-home',
@@ -21,8 +22,9 @@ export class UserComponent implements OnInit {
   public user: User;
 
   constructor(private router: Router, private auth: AuthService,
-              private api: ApiService,
-              private fb: FormBuilder) {
+              private dataService: DataService,
+              private fb: FormBuilder,
+              private notificationService: NotificationService) {
   }
 
   public static validateConfirmPassword(fc: FormControl) {
@@ -45,16 +47,38 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.user = this.auth.getUserInfo();
 
-    this.permissions = [];
     this.form = this.fb.group({
       Username: [{value: this.user.Username, disabled: true}, [
         Validators.required,
       ]],
+      FirstName: [this.user.FirstName, [
+        Validators.required,
+      ]],
+      LastName: [this.user.LastName, [
+        Validators.required,
+      ]],
+      PhoneNumber: [this.user.PhoneNumber, []],
+      CustomField: [this.user.CustomField, []],
       ChangePassword: [false, []],
       CurrentPassword: ['', []],
       Password: ['', []],
       ConfirmPassword: ['', []]
     }, {validator: UserComponent.refreshConfirmValidation});
+
+    this.dataService.getUser(this.user.Id)
+      .pipe(catchError((error: HttpErrorResponse): any => {
+        this.error = error.message;
+        this.inProgress = false;
+        return Observable.throw(error);
+      }))
+      .subscribe((user: User) => {
+        this.inProgress = false;
+        this.user = user;
+
+        this.form.controls['PhoneNumber'].setValue(this.user.PhoneNumber);
+        this.form.controls['CustomField'].setValue(this.user.CustomField);
+        this.form.controls['Password'].setValue(this.user.Password);
+      });
 
     this.form.get('ChangePassword').valueChanges.subscribe((changePassword: boolean) => {
         if (changePassword) {
@@ -70,8 +94,9 @@ export class UserComponent implements OnInit {
         this.form.get('CurrentPassword').updateValueAndValidity();
         this.form.get('Password').updateValueAndValidity();
         this.form.get('ConfirmPassword').updateValueAndValidity();
-      }
-    );
+      });
+
+    this.permissions = [];
 
   }
 
@@ -79,7 +104,10 @@ export class UserComponent implements OnInit {
     if (isValid) {
       this.inProgress = true;
 
-      this.api.put(`/ui/users/${this.user.Username}`, form)
+      let userInfo = this.user;
+      Object.assign(userInfo, form);
+
+      this.dataService.updateUser(userInfo)
         .pipe(catchError((error: HttpErrorResponse): any => {
           this.error = error.message;
           this.inProgress = false;
@@ -88,6 +116,14 @@ export class UserComponent implements OnInit {
         .subscribe((user: User) => {
           this.inProgress = false;
           this.auth.setUserInfo(user);
+          this.user = user;
+
+          this.notificationService.show({
+            content: 'User changes successfully saved.',
+            position: { horizontal: 'right', vertical: 'top' },
+            animation: { type: 'slide', duration: 30 },
+            type: { style: 'success', icon: true }
+          });
         });
     }
   }

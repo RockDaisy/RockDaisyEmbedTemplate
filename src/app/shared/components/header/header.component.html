@@ -1,10 +1,12 @@
-
-<div class="navbar">
+<div class="navbar k-content">
   <a class="navbar-brand" routerLink="/home">
     <img src="/assets/images/logo-white.png" width="50px" alt="RockDaisy">
   </a>
 
-  <kendo-menu [items]="menuItems" (select)="onSelect($event)"></kendo-menu>
+  <kendo-menu [items]="menuItems"
+              openOnClick="true"
+              (select)="onSelect($event)">
+  </kendo-menu>
 
 
 </div>

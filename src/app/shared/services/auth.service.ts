@@ -23,6 +23,7 @@ export class User {
   FirstName: string;
   LastName: string;
   CustomField: string;
+  Password: string;
   ClientType: number;
   SubscriptionExpiration: boolean;
   CardLastNumber: string;
