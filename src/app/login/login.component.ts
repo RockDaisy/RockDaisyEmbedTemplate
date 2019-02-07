@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {User} from '../shared/services';
+import {User} from '../shared/services/models/user';
 import {catchError} from "rxjs/operators";
 
 @Component({

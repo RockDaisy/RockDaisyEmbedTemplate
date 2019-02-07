@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService, User} from '../../services';
+import {User} from '../../services/models/user';
+import {AuthService} from '../../services/';
 
 @Component({
   selector: 'app-header',

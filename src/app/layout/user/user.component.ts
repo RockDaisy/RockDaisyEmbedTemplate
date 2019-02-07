@@ -4,7 +4,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AuthService, User, DataService} from '../../shared/services';
+import {AuthService, DataService} from '../../shared/services';
+import {User} from '../../shared/services/models/user';
 import {catchError} from 'rxjs/operators';
 import {NotificationService} from "@progress/kendo-angular-notification";
 
