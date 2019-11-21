@@ -56,6 +56,10 @@ export class AuthService implements CanActivate {
     this.idle.watch();
   }
 
+  setLoginLinkToken (token: string) {
+    this.storeHelper.add('LOGIN_LINK', token);
+  }
+
   public setUserInfo (info: any) {
     this.storeHelper.update('user', info);
   }
@@ -116,6 +120,10 @@ export class AuthService implements CanActivate {
     )
       .pipe(catchError(err => Observable.throw(err)))
       .do((res: any) => this.setJwt(res.access_token))
+      .flatMap((authRes: any) => {
+        return this.api.get(`/api/userLoginLink`)
+          .do((res: any) => this.setLoginLinkToken(res.LinkToken))
+      })
       .flatMap((authRes: any) => {
         return this.api.get(`/api/config`)
           .do((res: any) => this.setUserInfo(res))

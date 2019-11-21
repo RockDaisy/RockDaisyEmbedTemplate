@@ -3,7 +3,7 @@ import { routerTransition } from '../../router.animations';
 import {environment} from "../../../environments/environment";
 import {AppFilter, FilterType} from "../../shared/components/filter/models/filter";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {FiltersService} from "../../shared/services";
+import {FiltersService, Store, StoreHelper} from "../../shared/services";
 
 @Component({
     selector: 'app-dashboard1-page',
@@ -19,14 +19,21 @@ export class Dashboard1Component implements OnInit {
   public views: Array<SafeResourceUrl> = [];
 
   private refreshViews (serializedFilters: string){
+    const token = this.store.getState()['LOGIN_LINK'];
+    const loginLink = token && token[0] ? `/LoginLink=${token[0]}` : '';
+
     this.views = [
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/757/${serializedFilters}//{ "hideHeaderLogo": true }`),
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/758/${serializedFilters}//{ "hideHeaderLogo": true }`),
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/759/${serializedFilters}//{ "hideHeaderLogo": true }`)
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `${loginLink}/view/757/${serializedFilters}//{ "hideHeaderLogo": true }`),
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `${loginLink}/view/758/${serializedFilters}//{ "hideHeaderLogo": true }`),
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `${loginLink}/view/759/${serializedFilters}//{ "hideHeaderLogo": true }`)
     ];
+
+    if(loginLink) {
+      this.storeHelper.update('LOGIN_LINK', null);
+    }
   }
 
-  constructor(private sanitizer: DomSanitizer, private filtersService: FiltersService) {
+  constructor(private store: Store, private storeHelper: StoreHelper, private sanitizer: DomSanitizer, private filtersService: FiltersService) {
     this.refreshViews('');
   }
 
