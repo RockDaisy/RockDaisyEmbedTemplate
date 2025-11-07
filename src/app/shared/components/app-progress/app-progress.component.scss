@@ -1,0 +1,35 @@
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.inline-progress {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+
+  .icon-sync-api {
+    font-size: 20px;
+    animation: spinner 2s linear infinite;
+  }
+}
+
+.app-bar-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+
+  kendo-progressbar {
+    font-size: 12px;
+  }
+}

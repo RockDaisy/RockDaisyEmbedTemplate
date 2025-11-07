@@ -1,4 +1,4 @@
-@import "../../../styles/utils";
+@use "../../../styles/mixins";
 
 .user-settings-view {
   height: 100%;
@@ -7,7 +7,7 @@
     box-sizing: border-box;
     width: 350px;
 
-    @include respond-below(sm) {
+    @include mixins.respond-to(xs-sm) {
       width: 100%;
     }
   }

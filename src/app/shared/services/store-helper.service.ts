@@ -3,34 +3,38 @@ import { Store } from './store.service';
 
 @Injectable()
 export class StoreHelper {
-    constructor(private store: Store) {}
+	constructor(private store: Store) {}
 
-    update(prop, state) {
-        const currentState = this.store.getState();
-        this.store.setState(Object.assign({}, currentState, { [prop]: state }));
-    }
+	update(prop: string, state: Record<string, any> | null) {
+		const currentState = this.store.getState();
 
-    add(prop, state) {
-        const currentState = this.store.getState();
-        const collection = currentState[prop];
-        this.store.setState(Object.assign({}, currentState, { [prop]: [state, ...collection] }));
-    }
+		this.store.setState(Object.assign({}, currentState, { [prop]: state }));
+	}
 
-    findAndUpdate(prop, state) {
-        const currentState = this.store.getState();
-        const collection = currentState[prop];
+	add(prop: string, state: Record<string, any> | string) {
+		const currentState = this.store.getState();
+		const collection = currentState[prop] || [];
 
-        this.store.setState(Object.assign({}, currentState, {[prop]: collection.map(item => {
-            if (item.id !== state.id) {
-                return item;
-            }
-            return Object.assign({}, item, state)
-        })}))
-    }
+		this.store.setState(Object.assign({}, currentState, { [prop]: [state, ...collection] }));
+	}
 
-    findAndDelete(prop, id) {
-        const currentState = this.store.getState();
-        const collection = currentState[prop];
-        this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter(item => item.id !== id)}));
-    }
+	findAndUpdate(prop: string, state: Record<string, any>) {
+		const currentState = this.store.getState();
+		const collection = currentState[prop];
+
+		this.store.setState(Object.assign({}, currentState, {[prop]: collection.map((item: Record<string, any>) => {
+			if (item.id !== state.id) {
+				return item;
+			}
+
+			return Object.assign({}, item, state);
+		})}));
+	}
+
+	findAndDelete(prop: string, id: string) {
+		const currentState = this.store.getState();
+		const collection = currentState[prop];
+
+		this.store.setState(Object.assign({}, currentState, {[prop]: collection.filter((item: Record<string, any>) => item.id !== id)}));
+	}
 }

@@ -1,90 +1,88 @@
-import {Component, OnInit, Injectable} from '@angular/core';
-import { routerTransition } from '../../router.animations';
-import {environment} from "../../../environments/environment";
-import {AppFilter, FilterType} from "../../shared/components/filter/models/filter";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {FiltersService, Store, StoreHelper} from "../../shared/services";
+import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../environments/environment';
+import {AppFilter, FilterType} from '../../shared/components/filter/models/filter';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {AuthService, FiltersService} from '../../shared';
+import {forkJoin} from 'rxjs';
 
 @Component({
-    selector: 'app-dashboard1-page',
-    templateUrl: './dashboard1.component.html',
-    styleUrls: ['./dashboard1.component.scss'],
-    animations: [routerTransition()]
+	selector: 'app-dashboard1-page',
+	standalone: false,
+	templateUrl: './dashboard1.component.html',
+	styleUrls: ['./dashboard1.component.scss'],
 })
 
-@Injectable()
 export class Dashboard1Component implements OnInit {
-  public API_URL = environment.apiUrl;
-  public filters: Array<AppFilter>;
-  public views: Array<SafeResourceUrl> = [];
+	public API_URL = environment.apiUrl;
+	public filters: AppFilter[];
+	public views: SafeResourceUrl[] = [];
+	public isInProgress: boolean;
 
-  private refreshViews (serializedFilters: string){
-    const token = this.store.getState()['LOGIN_LINK'];
-    const loginLink = token && token[0] ? `/LoginLink=${token[0]}` : '';
+	constructor(private authService: AuthService,
+		private sanitizer: DomSanitizer, private filtersService: FiltersService) {}
 
-    this.views = [
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `${loginLink}/view/757/${serializedFilters}//{ "hideHeaderLogo": true }`),
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `${loginLink}/view/758/${serializedFilters}//{ "hideHeaderLogo": true }`),
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `${loginLink}/view/759/${serializedFilters}//{ "hideHeaderLogo": true }`)
-    ];
+	public onFiltersSubmitClick() {
+		const serializedFilters = this.filtersService.serializeFilters(this.filters);
 
-    if(loginLink) {
-      this.storeHelper.update('LOGIN_LINK', null);
-    }
-  }
+		if(serializedFilters) {
+			this.refreshViews(serializedFilters);
+		}
+	}
 
-  constructor(private store: Store, private storeHelper: StoreHelper, private sanitizer: DomSanitizer, private filtersService: FiltersService) {
-    this.refreshViews('');
-  }
+	ngOnInit(): void {
+		this.refreshViews('');
+		this.filters = [
+			new AppFilter({
+				Key: '@DateRange',
+				Label: 'Date Range',
+				Type: FilterType.DateRange,
+				Options: {},
+				Value: {start: null, end: null}
+			}),
 
-  public onFiltersSubmitClick(){
-    const serializedFilters = this.filtersService.serializeFilters(this.filters);
+			new AppFilter({
+				Type: FilterType.DropDown,
+				Key: '@PlayerId',
+				Label: 'Player',
+				Options: {
+					defaultValue: {PlayerId: null, PlayerFullName: 'Select Player...'},
+					textField: 'PlayerFullName',
+					valueField: 'PlayerId',
+					dataSourceId: 125,
+					data: [],
+					source: [],
+				},
+				Value: null
+			}),
 
-    if(serializedFilters) {
-      this.refreshViews(serializedFilters);
-    }
-  }
+			new AppFilter({
+				Type: FilterType.MultiSelect,
+				Key: '@TeamIds',
+				Label: 'Team',
+				Options: {
+					defaultValue: 'Select Team(s)...',
+					textField: 'TeamName',
+					valueField: 'TeamId',
+					dataSourceId: 68,
+					data: [],
+					source: [],
+				},
+				Value: []
+			})
+		];
+	}
 
-  ngOnInit(): void {
-    this.filters = [
-      new AppFilter({
-        Key: '@DateRange',
-        Label: 'Date Range',
-        Type: FilterType.DateRange,
-        Options: {},
-        Value: { start: null, end: null }
-      }),
+	private refreshViews(serializedFilters: string) {
+		const clientViewIds = [757, 758, 759]; // anaducks: ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db'];
 
-      new AppFilter({
-        Type: FilterType.DropDown,
-        Key: '@PlayerId',
-        Label: 'Player',
-        Options: {
-          defaultValue: { PlayerId: null, PlayerFullName: 'Select Player...' },
-          textField: 'PlayerFullName',
-          valueField: 'PlayerId',
-          dataSourceId: 125,
-          data: [],
-          source: [],
-        },
-        Value: null
-      }),
-
-      new AppFilter({
-        Type: FilterType.MultiSelect,
-        Key: '@TeamIds',
-        Label: 'Team',
-        Options: {
-          defaultValue: 'Select Team(s)...',
-          textField: 'TeamName',
-          valueField: 'TeamId',
-          dataSourceId: 68,
-          data: [],
-          source: [],
-        },
-        Value: []
-      })
-    ];
-  }
+		this.isInProgress = true;
+		this.views = [];
+		forkJoin(clientViewIds.map(() => this.authService.getUserLoginLink()))
+			.subscribe((tokenResponses) => {
+				// eslint-disable-next-line @stylistic/max-len
+				this.views = tokenResponses.map((token: Record<string, any>, i) =>  this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/${clientViewIds[i]}?loginLink=${token.LinkToken}&filters=${serializedFilters}&fullScreen={"hideHeaderLogo":true}`));
+				this.isInProgress = false;
+			});
+	}
 }
 

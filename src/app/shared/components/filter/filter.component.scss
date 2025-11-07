@@ -1,4 +1,4 @@
-@import "../../../../styles/utils";
+@use "../../../../styles/mixins";
 
 .filter-wrapper {
   .k-form-field {
@@ -7,7 +7,7 @@
     display: inline-flex;
     width: 250px;
 
-    @include respond-below(sm) {
+    @include mixins.respond-to(xs-sm) {
       margin-bottom: 10px!important;
     }
 

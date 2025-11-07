@@ -1,41 +1,39 @@
-<div class="login-page" [@routerTransition]>
-    <div class="login-page__content k-content">
-        <img src="/assets/images/logo-white.png" width="150px" class="user-avatar"/>
+<div class="login-page app-page">
+  <div class="login-page__content">
+    <img class="login-page__content-logo" alt="Logo" src="/assets/images/logo-white.png" width="150"/>
 
-        <form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmitForm(loginForm.value, loginForm.valid)">
-            <div class="form-content">
-                <div class="form-group"
-                     [ngClass]="{ 'has-danger': login.invalid && (login.dirty || login.touched), 'has-success': login.valid && (login.dirty || login.touched)}">
-                    <input type="text"
-                           name="login"
-                           formControlName="login"
-                           required
-                           class="k-textbox"
-                           placeholder="Enter Username">
+    <form (ngSubmit)="onSubmitForm($event)"
+          [formGroup]="loginForm"
+          class="k-form k-form-sm" novalidate>
+      @if (isInProgress) {
+        <app-progress></app-progress>
+      }
 
-                    <div *ngIf="login.hasError('required') && (login.dirty || login.touched)"
-                        class="k-tooltip-validation k-invalid-msg"> Username is required.
-                    </div>
-                </div>
+      <kendo-formfield>
+        <kendo-label labelCssClass="k-required" text="Username" />
+        <kendo-textbox [maxlength]="100" formControlName="login"/>
 
-                <div class="form-group"
-                     [ngClass]="{ 'has-danger': password.invalid && (password.dirty || password.touched), 'has-success': password.valid && (password.dirty || password.touched)}">
-                    <input type="password"
-                           name="password"
-                           formControlName="password"
-                           required
-                           class="k-textbox"
-                           placeholder="Enter Password">
+        <kendo-formerror>Username is required.</kendo-formerror>
+      </kendo-formfield>
 
-                    <div *ngIf="password.hasError('required') && (password.dirty || password.touched)"
-                         class="k-tooltip-validation k-invalid-msg">Password is required.
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="isInProgress" class="app-progress"><span class="k-i-loading k-icon"></span></div>
-            <div class="error-summary" [hidden]="!error">{{error}}</div>
+      <kendo-formfield>
+        <kendo-label labelCssClass="k-required" text="Password" />
+        <kendo-textbox [maxlength]="100" formControlName="password" type="password"/>
+        <kendo-formerror>Password is required.</kendo-formerror>
+      </kendo-formfield>
 
-            <button type="submit" class="k-button k-primary" [disabled]="!loginForm.valid">SIGN IN</button>
-        </form>
-    </div>
+      <div [hidden]="!error" [innerText]="error" class="summary-error"></div>
+
+      <div class="login-page__content-footer">
+        <div class="login-page__content-footer-eula">
+          By clicking Log in, you agree to our
+          <a href="https://rockdaisy.com/license-agreement/" target="_blank">EULA</a>,
+          <a href="https://rockdaisy.com/privacy-policy/" target="_blank">Privacy</a> and
+          <a href="https://rockdaisy.com/cookie-policy/" target="_blank">Cookies Policy</a>.
+        </div>
+
+        <button kendoButton themeColor="tertiary" type="submit">LOG IN</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,46 +1,119 @@
-@import "../../styles/variables";
-
-:host {
-  display: block;
-}
+@use "../../styles/mixins";
+@use "../../styles/colors";
 
 .login-page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: auto;
-  background: url(/assets/images/background.jpg) center center fixed;
-  text-align: center;
-  color: black;
+  background-attachment: fixed;
+  background-position: 50%;
+  background-size: cover;
+  background-image: url("../../assets/images/background.jpg");
+  overflow: hidden;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  font-size: 14px;
+
+  --kendo-color-on-app-surface: white;
+  --kendo-color-border: colors.$tertiaryColor;
+  --kendo-color-border-alt: white;
+
+  @include mixins.respond-to(xs) {
+    height: 100%;
+    border-radius: 0;
+  }
+
+  a {
+    color: colors.$tertiaryColor;
+
+    &:hover,
+    &:focus {
+      color: colors.$tertiaryColor;
+      opacity: 0.8;
+    }
+  }
 
   &__content {
-    padding: 2em;
+    padding: 40px;
+    max-width: 500px;
     position: relative;
-    width: 300px;
-    border-radius: 2px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: colors.$primaryColor;
+    border-color: colors.$tertiaryColor;
+    color: white;
 
-    h1 {
-      font-weight: 300;
+    @include mixins.respond-to(xs) {
+      margin-top: 0;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      padding: 20px;
+      border-radius: 0;
+      border: 0;
+      will-change: scroll-position;
+      overflow: auto;
+    }
+
+    &-logo {
+      display: block;
+      height: 100px;
+      margin: 0 auto 20px;
+      max-width: 100%;
+    }
+
+    &__forgot-pwd-link {
+      font-size: 12px;
+    }
+
+    .summary-error {
       margin-top: 20px;
-      margin-bottom: 10px;
-      font-size: 36px;
+      margin-bottom: 20px;
+    }
 
-      small {
-        color: rgba(255, 255, 255, 0.7);
+    &-footer {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin-top: 20px;
+
+      &-row {
+        flex-direction: row;
+        justify-content: space-between;
+
+      }
+
+      &-eula {
+        font-size: 12px;
+      }
+
+      .k-button {
+        width: 300px;
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        border-radius: 3px;
+        border: none;
       }
     }
 
-    .form-group {
-      padding: 8px 0;
+    .client-logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      height: 100px;
+      max-width: 100%;
     }
 
-    .form-content {
-      padding: 15px 0;
+    .k-textbox {
+      width: 100%;
+      font-size: 18px;
+      background-color: transparent;
     }
   }
 }

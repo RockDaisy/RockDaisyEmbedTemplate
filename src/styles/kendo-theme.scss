@@ -1,0 +1,247 @@
+@use 'sass:map';
+@use 'colors';
+
+$generalPadding: 0.5rem;
+
+@use '@progress/kendo-theme-default/scss/index.scss' as *;
+
+$kendo-colors: map.merge($kendo-colors, k-generate-color-variations('tertiary', colors.$tertiaryColor, 'default'));
+$kendo-colors: map.merge($kendo-colors, k-generate-color-variations('primary', colors.$primaryColor, 'default'));
+
+$kendo-font-size: 14px;
+$kendo-panelbar-header-padding-x: $generalPadding;
+$kendo-panelbar-header-padding-y: $generalPadding;
+$kendo-panelbar-border-width: 0;
+$kendo-panelbar-header-bg: #F3F5F6;
+$kendo-panelbar-header-text: black;
+$kendo-popover-header-padding-x: $generalPadding;
+$kendo-popover-header-padding-y: $generalPadding;
+$kendo-popover-body-padding-x: 0;
+$kendo-popover-body-padding-y: 0;
+$kendo-popover-border-width: 0;
+$kendo-popover-border-radius: 0;
+$kendo-popover-callout-width: $generalPadding;
+$kendo-popover-callout-height: $generalPadding;
+
+$kendo-horizontal-form-label-width: 35%;
+$kendo-inline-form-element-width: 35%;
+
+$kendo-grid-selected-bg: rgba(0, 0, 0, 0.1);
+
+$kendo-window-buttongroup-border-width: 0;
+$kendo-window-buttongroup-padding-x: 0;
+$kendo-window-buttongroup-padding-y: 0;
+$kendo-window-inner-padding-x: $generalPadding;
+$kendo-window-inner-padding-y: $generalPadding;
+
+$kendo-dialog-buttongroup-border-width: 0;
+$kendo-actions-button-spacing: 0;
+$kendo-dialog-buttongroup-padding-x: 0;
+$kendo-dialog-buttongroup-padding-y: 0;
+$kendo-breadcrumb-bg: transparent;
+$kendo-listview-bg: transparent;
+$kendo-listview-border-width: 0;
+
+$kendo-checkbox-lg-size: 22px;
+
+@include kendo-theme--styles();
+
+$kendo-colors: map.merge(
+    $kendo-colors,
+    (
+      app-surface: #f8f8f8,
+      on-app-surface: #111111
+    )
+);
+
+
+.k-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+}
+
+.k-grid {
+  flex: 1 1 1px;
+  min-height: 1px;
+
+  .k-grid-toolbar {
+    .k-textbox {
+      margin-left: auto;
+      width: 170px;
+    }
+  }
+
+  .k-grid-header {
+    .k-table-th {
+      vertical-align: middle;
+
+      &.normal-wrap {
+        .k-column-title {
+          white-space: normal;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .k-command-cell {
+    text-align: center;
+
+    > .k-button {
+      margin-inline-end: 0;
+    }
+  }
+
+  .k-table-td.no-padding > * {
+    padding-block: var(--kendo-spacing-1, 0.25rem);
+    padding-inline: var(--kendo-spacing-2, 0.5rem);
+  }
+
+  .k-multi-actions-column {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}
+
+.k-listview {
+  &.k-listview-pageable-hidden {
+    .k-listview-pager {
+      display: none;
+    }
+  }
+}
+
+.k-listview-pager {
+  justify-content: center;
+}
+
+.k-notification-group {
+  margin-top: 55px;
+}
+
+.k-notification {
+  > .k-notification-content {
+    min-width: 1px;
+    overflow: auto;
+    display: flex;
+  }
+}
+
+.k-treeview {
+  flex: 1 1 1px;
+  display: flex;
+  flex-direction: column;
+
+  .k-treeview-lines {
+    flex: 1 1 1px;
+    overflow: auto;
+  }
+
+  .k-treeview-item {
+    .k-treeview-leaf {
+      cursor: pointer;
+      width: 100%;
+
+      .k-icon {
+        margin-right: 0;
+      }
+
+      .k-treeview-leaf-text {
+        flex: 1 1 1px;
+      }
+
+      &:hover,
+      &.k-hover,
+      &.k-selected {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.k-button {
+  &.k-button-solid-primary {
+    color: white;
+  }
+
+  &.k-button-link {
+    text-decoration: underline;
+  }
+}
+
+.k-popover {
+  display: flex;
+  flex-direction: column;
+
+  .k-popover-body {
+    flex: 1 1 1px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.k-dialog-wrapper {
+  &.rd-no-padding {
+    > .k-window > .k-window-content {
+      padding: 0;
+    }
+  }
+}
+
+.k-window {
+  .k-window-content {
+    > * {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+    }
+
+    .k-form {
+      flex: 1 1 1px;
+    }
+  }
+
+  .k-window-actions {
+    gap: 0;
+
+    .k-button {
+      padding: 15px;
+      text-transform: uppercase;
+      font-size: 18px;
+      border-radius: 0;
+      border-right: 1px solid var(--kendo-color-border);
+    }
+  }
+}
+
+.k-popup {
+  .k-actions {
+    padding: 0;
+    margin: 0;
+
+    .k-button {
+      padding: 15px;
+      text-transform: uppercase;
+      font-size: 18px;
+      border-radius: 0;
+      border-right: 1px solid var(--kendo-color-border);
+    }
+  }
+}
+
+.k-splitter.k-splitter-flex {
+  .k-pane.k-hidden,
+  .k-pane[hidden],
+  .k-pane-flex.k-hidden,
+  .k-pane-flex[hidden] {
+    display: none !important;
+  }
+}
+
+.k-text-center {
+  .k-input-inner {
+    text-align: center;
+  }
+}

@@ -1,4 +1,4 @@
-<div class="user-settings-view k-content" [@routerTransition]>
+<div class="user-settings-view k-content">
   <form class="k-form-inline" novalidate [formGroup]="form"
         (ngSubmit)="onSubmit(form.value, form.valid)">
     <button type="submit" class="k-button k-primary" [disabled]="!form.valid">SUBMIT</button>
@@ -14,33 +14,40 @@
                formControlName="Username"/>
       </label>
 
-      <div *ngIf="form.controls['Username'].hasError('required') && form.controls['Username'].touched"
-           class="k-tooltip-validation k-invalid-msg text-center">Username is required
-      </div>
+      @if (form.controls['Username'].hasError('required') && form.controls['Username'].touched) {
+        <div
+          class="k-tooltip-validation k-invalid-msg text-center">Username is required
+        </div>
+      }
 
-      <label class="k-form-field">
+      <label [for]="firstName" class="k-form-field">
         <span>First Name <span class="required-validation">*</span></span>
         <input class="k-textbox"
+               #firstName
                id="FirstName"
                name="FirstName"
                formControlName="FirstName"/>
       </label>
 
-      <div *ngIf="form.controls['FirstName'].hasError('required') && form.controls['FirstName'].touched"
-           class="k-tooltip-validation k-invalid-msg text-center">First Name is required
-      </div>
+      @if (form.controls['FirstName'].hasError('required') && form.controls['FirstName'].touched) {
+        <div
+          class="k-tooltip-validation k-invalid-msg text-center">First Name is required
+        </div>
+      }
 
-      <label class="k-form-field">
+      <label [for]="lastName" class="k-form-field">
         <span>Last Name <span class="required-validation">*</span></span>
         <input class="k-textbox"
+               #lastName
                id="LastName"
                name="LastName"
                formControlName="LastName"/>
       </label>
 
-      <label class="k-form-field">
+      <label [for]="phone" class="k-form-field">
         <span>Phone Number</span>
         <kendo-maskedtextbox mask="+00000000000"
+                             #phone
                              id="PhoneNumber"
                              name="PhoneNumber"
                              formControlName="PhoneNumber"></kendo-maskedtextbox>
@@ -54,9 +61,11 @@
                formControlName="CustomField"/>
       </label>
 
-      <div *ngIf="form.controls['LastName'].hasError('required') && form.controls['LastName'].touched"
-           class="k-tooltip-validation k-invalid-msg text-center">Last Name is required
-      </div>
+      @if (form.controls['LastName'].hasError('required') && form.controls['LastName'].touched) {
+        <div
+          class="k-tooltip-validation k-invalid-msg text-center">Last Name is required
+        </div>
+      }
 
       <div>
         <label class="k-form-field">
@@ -68,13 +77,17 @@
                  formControlName="Password"/>
         </label>
 
-        <div *ngIf="form.controls['CurrentPassword'].hasError('required') && form.controls['Password'].touched"
-             class="k-tooltip-validation k-invalid-msg text-center">Current Password is required.
-        </div>
+        @if (form.controls['CurrentPassword'].hasError('required') && form.controls['Password'].touched) {
+          <div
+            class="k-tooltip-validation k-invalid-msg text-center">Current Password is required.
+          </div>
+        }
       </div>
     </fieldset>
 
-    <div *ngIf="inProgress" class="app-progress"><span class="k-i-loading k-icon"></span></div>
+    @if (inProgress) {
+      <div class="app-progress"><span class="k-i-loading k-icon"></span></div>
+    }
     <div class="error-summary" [hidden]="!error">{{error}}</div>
   </form>
 </div>

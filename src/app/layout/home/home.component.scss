@@ -1,4 +1,4 @@
-@import "../../../styles/utils";
+@use "../../../styles/mixins";
 
 .app-page {
   display: flex;
@@ -22,7 +22,7 @@
   align-items: center;
   flex-wrap: wrap;
 
-  @include respond-below(sm) {
+  @include mixins.respond-to(xs-sm) {
     display: block;
   }
 
@@ -31,7 +31,7 @@
   &__submit {
     margin-left: 10px;
 
-    @include respond-below(sm) {
+    @include mixins.respond-to(xs-sm) {
       text-align: right;
     }
   }

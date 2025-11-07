@@ -1,0 +1,23 @@
+@if (mode === 'stretch') {
+  <div class="k-loading-mask">
+    <span class="k-loading-text">Loading</span>
+    <div class="k-loading-image"></div>
+    <div class="k-loading-color"></div>
+  </div>
+}
+
+@if (mode === 'inline') {
+  <div class="inline-progress">
+    <span class="icon-sync-api"></span>
+    <span>Saving...</span>
+  </div>
+}
+
+@if (mode === 'bar') {
+  <div class="app-bar-progress">
+    <kendo-progressbar [animation]="true"
+      [label]="barLabelOptions"
+      [max]="barMaxValue"
+      [value]="barValue"/>
+    </div>
+  }

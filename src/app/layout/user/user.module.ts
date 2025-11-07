@@ -6,14 +6,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {InputsModule} from '@progress/kendo-angular-inputs';
 
 @NgModule({
-    imports: [
-        UserRoutingModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        InputsModule
-    ],
-    declarations: [UserComponent]
+	imports: [
+		UserRoutingModule,
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		InputsModule
+	],
+	declarations: [UserComponent]
 })
 export class UserModule {
 }

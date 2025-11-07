@@ -1,41 +1,38 @@
 import {BehaviorSubject} from 'rxjs';
 import {Injectable} from '@angular/core';
-import 'rxjs/Rx';
-import {distinctUntilChanged} from 'rxjs/operators';
 
 export interface Entity {
-    color: string,
-    title: string,
-    value: string,
-    id?: string | number,
-    createdAt?: string,
-    updatedAt?: string,
-    userId?: string
+	color: string;
+	title: string;
+	value: string;
+	id?: string | number;
+	createdAt?: string;
+	updatedAt?: string;
+	userId?: string;
 }
 
 export interface State {
-    notes: Array<Entity>
+	notes: Entity[];
 }
-const defaultState = {
-    notes: []
-};
 
-const _store = new BehaviorSubject<State>(defaultState);
+const defaultState = {
+	notes: []
+};
+const store = new BehaviorSubject<State>(defaultState);
 
 @Injectable()
 export class Store {
-    private _store = _store;
-    changes = this._store.asObservable().pipe(distinctUntilChanged());
+	private _store = store;
 
-    setState(state: State) {
-        this._store.next(state);
-    }
+	setState(state: Record<string, any>) {
+		this._store.next(state as State);
+	}
 
-    getState(): State {
-        return this._store.value;
-    }
+	getState(): Record<string, any> {
+		return this._store.value;
+	}
 
-    purge() {
-        this._store.next(defaultState);
-    }
+	purge() {
+		this._store.next(defaultState);
+	}
 }

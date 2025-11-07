@@ -1,4 +1,4 @@
-@import "../../../../styles/utils";
+@use "../../../../styles/mixins";
 
 .navbar {
   display: flex;
@@ -6,6 +6,11 @@
   padding: 10px;
   box-sizing: border-box;
   text-transform: uppercase;
+  background-color: var(--kendo-color-primary);
+  color: white;
+
+  --kendo-color-on-app-surface: white;
+  --kendo-color-subtle: var(--kendo-color-on-primary);
 
   &-brand {
     margin: 0 10px;
@@ -17,14 +22,14 @@
     .k-item {
 
       &.desktop-visible {
-        @include respond-below(sm) {
+        @include mixins.respond-to(xs-sm) {
           display: none;
         }
       }
 
       &.mobile-visible {
 
-        @include respond-above(sm) {
+        @include mixins.respond-to(xs-sm) {
           display: none;
         }
 

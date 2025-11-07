@@ -1,44 +1,40 @@
 import {Injectable} from '@angular/core';
-import {formatDate} from '@telerik/kendo-intl';
-import {AppFilter, FilterType} from "../components/filter/models/filter";
+import {AppFilter, FilterType} from '../components/filter/models/filter';
+import {format} from '@progress/kendo-angular-intl';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class FiltersService {
 
-  constructor() {
-  }
+	public serializeFilters(filters: AppFilter[]): string {
+		const serialized = filters
+			.filter(filter => filter.hasValue())
+			.map((filter) => `${filter.Key}=${this.serializeFilterValues(filter)}`)
+			.join('&');
 
-  private serializeFilterValues(filter: AppFilter): string {
-    let serializedValues = '';
+		return encodeURIComponent(serialized).replace(/%/g, '__');
+	};
 
-    if (filter.hasValue()) {
-      switch (filter.Type) {
-        case FilterType.DateRange:
-          serializedValues = `${formatDate(filter.Value.start, "u")}|${formatDate(filter.Value.end, "u")}`
-            .replace(/\//g, '-');
-          break;
-        case FilterType.MultiSelect:
-          serializedValues = filter.Value.join(',');
-          break;
-        default:
-          serializedValues = filter.Value.toString();
-          break;
+	private serializeFilterValues(filter: AppFilter): string {
+		let serializedValues = '';
 
-      }
-    }
+		if (filter.hasValue()) {
+			switch (filter.Type) {
+				case FilterType.DateRange:
+					serializedValues = `${format(filter.Value.start, 'u')}|${format(filter.Value.end, 'u')}`
+						.replace(/\//g, '-');
+					break;
+				case FilterType.MultiSelect:
+					serializedValues = filter.Value.join(',');
+					break;
+				default:
+					serializedValues = filter.Value.toString();
+					break;
 
-    return serializedValues;
-  };
+			}
+		}
 
-  public serializeFilters(filters: Array<AppFilter>): string {
-    const serialized = filters
-      .filter(filter => filter.hasValue())
-      .map((filter) => `${filter.Key}=${this.serializeFilterValues(filter)}`)
-      .join('&');
-
-    return encodeURIComponent(serialized).replace(/%/g, '__');
-  };
-
+		return serializedValues;
+	};
 }

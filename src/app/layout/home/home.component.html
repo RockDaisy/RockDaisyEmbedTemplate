@@ -1,16 +1,20 @@
-<div [@routerTransition] class="app-page k-form-inline">
+<div class="app-page k-form-inline">
   <kendo-panelbar>
-    <kendo-panelbar-item [title]="'FILTERS'" expanded="true">
+    <kendo-panelbar-item [title]="'FILTERS'" [expanded]="true">
       <ng-template kendoPanelBarContent>
         <div class="app-filters">
-          <div *ngFor="let filter of filters" class="app-filter">
-            <app-filter [filter]="filter"></app-filter>
-          </div>
+          @for (filter of filters; track filter) {
+            <div class="app-filter">
+              <app-filter [filter]="filter"></app-filter>
+            </div>
+          }
 
           <div class="app-filters__submit">
             <button type="button"
-                    (click)="onFiltersSubmitClick()"
-                    class="k-button k-primary">APPLY</button>
+                    kendoButton
+                    themeColor="primary"
+                    (click)="onFiltersSubmitClick()">APPLY
+            </button>
           </div>
         </div>
       </ng-template>
@@ -18,8 +22,10 @@
   </kendo-panelbar>
 
   <div class="views-wrapper">
-    <div class="iframe-wrapper" *ngFor="let url of views">
-      <iframe [src]='url' frameborder="0" height="600" width="100%"></iframe>
-    </div>
+    @for (url of views; track url) {
+      <div class="iframe-wrapper">
+        <iframe [src]='url' height="600" width="100%"></iframe>
+      </div>
+    }
   </div>
 </div>

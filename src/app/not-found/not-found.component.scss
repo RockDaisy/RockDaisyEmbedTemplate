@@ -1,6 +1,6 @@
-@import "../../styles/variables";
+@use "../../styles/colors";
 
-$topnav-background-color: $app-bg-dark;
+$topnav-background-color: colors.$lightPrimaryColor;
 
 :host {
     display: block;

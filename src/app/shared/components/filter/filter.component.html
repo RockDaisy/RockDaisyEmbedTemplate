@@ -1,45 +1,47 @@
-<div [ngSwitch]="filter.Type" class="filter-wrapper">
-  <div *ngSwitchCase="0">
-    <kendo-daterange>
-      <label class="k-form-field">
-        <span>Start</span>
-        <kendo-dateinput kendoDateRangeStartInput [(value)]="filter.Value.start"></kendo-dateinput>
-      </label>
+<div class="filter-wrapper">
+  @switch (filter.Type) {
+    @case (0) {
+      <div>
+        <kendo-daterange>
+          <kendo-formfield>
+            <kendo-label [for]="filterStart" text="Start"/>
+            <kendo-dateinput #filterStart kendoDateRangeStartInput [(ngModel)]="filter.Value.start"></kendo-dateinput>
+          </kendo-formfield>
 
-      <label class="k-form-field">
-        <span>End</span>
-        <kendo-dateinput kendoDateRangeEndInput [(value)]="filter.Value.end"></kendo-dateinput>
-      </label>
-    </kendo-daterange>
-  </div>
-
-  <div *ngSwitchCase="1">
-    <label class="k-form-field">
-      <span>{{filter.Label}}</span>
-
-      <kendo-multiselect [data]="filter.Options.data"
-                         [placeholder]="filter.Options.defaultValue"
-                         filterable="true"
-                         (filterChange)="onDropDownFilterChange($event)"
-                         [valuePrimitive]="true"
-                         [textField]="filter.Options.textField"
-                         [valueField]="filter.Options.valueField"
-                         [(ngModel)]="filter.Value"></kendo-multiselect>
-    </label>
-  </div>
-
-  <div *ngSwitchCase="2">
-    <label class="k-form-field">
-      <span>{{filter.Label}}</span>
-
-      <kendo-dropdownlist [data]="filter.Options.data"
-                          [defaultItem]="filter.Options.defaultValue"
-                          filterable="true"
-                          (filterChange)="onDropDownFilterChange($event)"
-                          [textField]="filter.Options.textField"
-                          [valueField]="filter.Options.valueField"
-                          [valuePrimitive]="true"
-                          [(ngModel)]="filter.Value"></kendo-dropdownlist>
-    </label>
-  </div>
+          <kendo-formfield>
+            <kendo-label [for]="filterEnd" text="End"/>
+            <kendo-dateinput #filterEnd kendoDateRangeStartInput [(ngModel)]="filter.Value.end"></kendo-dateinput>
+          </kendo-formfield>
+        </kendo-daterange>
+      </div>
+    }
+    @case (1) {
+      <kendo-formfield>
+        <kendo-label [for]="multiSelect" [text]="filter.Label"/>
+        <kendo-multiselect [data]="filter.Options.data"
+                           #multiSelect
+                           [placeholder]="filter.Options.defaultValue"
+                           [filterable]="true"
+                           (filterChange)="onDropDownFilterChange($event)"
+                           [valuePrimitive]="true"
+                           [textField]="filter.Options.textField"
+                           [valueField]="filter.Options.valueField"
+                           [(ngModel)]="filter.Value"></kendo-multiselect>
+      </kendo-formfield>
+    }
+    @case (2) {
+      <kendo-formfield>
+        <kendo-label [for]="dropDown" [text]="filter.Label"/>
+        <kendo-dropdownlist [data]="filter.Options.data"
+                            #dropDown
+                            [defaultItem]="filter.Options.defaultValue"
+                            [filterable]="true"
+                            (filterChange)="onDropDownFilterChange($event)"
+                            [textField]="filter.Options.textField"
+                            [valueField]="filter.Options.valueField"
+                            [valuePrimitive]="true"
+                            [(ngModel)]="filter.Value"></kendo-dropdownlist>
+      </kendo-formfield>
+    }
+  }
 </div>
