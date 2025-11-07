@@ -1,19 +1,13 @@
 <div class="filter-wrapper">
   @switch (filter.Type) {
     @case (0) {
-      <div>
-        <kendo-daterange>
-          <kendo-formfield>
-            <kendo-label [for]="filterStart" text="Start"/>
-            <kendo-dateinput #filterStart kendoDateRangeStartInput [(ngModel)]="filter.Value.start"></kendo-dateinput>
-          </kendo-formfield>
+      <kendo-daterange class="k-form-field">
+        <kendo-label [for]="filterStart" text="Start"/>
+        <kendo-dateinput #filterStart kendoDateRangeStartInput [(ngModel)]="filter.Value.start"></kendo-dateinput>
 
-          <kendo-formfield>
-            <kendo-label [for]="filterEnd" text="End"/>
-            <kendo-dateinput #filterEnd kendoDateRangeStartInput [(ngModel)]="filter.Value.end"></kendo-dateinput>
-          </kendo-formfield>
-        </kendo-daterange>
-      </div>
+        <kendo-label [for]="filterEnd" text="End"/>
+        <kendo-dateinput #filterEnd kendoDateRangeStartInput [(ngModel)]="filter.Value.end"></kendo-dateinput>
+      </kendo-daterange>
     }
     @case (1) {
       <kendo-formfield>

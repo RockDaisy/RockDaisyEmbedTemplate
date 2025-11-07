@@ -3,7 +3,7 @@ import {environment} from '../../../environments/environment';
 import {AppFilter, FilterType} from '../../shared/components/filter/models/filter';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {AuthService, FiltersService} from '../../shared';
-import {forkJoin} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
 
 @Component({
 	selector: 'app-dashboard1-page',
@@ -19,7 +19,8 @@ export class Dashboard1Component implements OnInit {
 	public isInProgress: boolean;
 
 	constructor(private authService: AuthService,
-		private sanitizer: DomSanitizer, private filtersService: FiltersService) {}
+		private sanitizer: DomSanitizer, private filtersService: FiltersService) {
+	}
 
 	public onFiltersSubmitClick() {
 		const serializedFilters = this.filtersService.serializeFilters(this.filters);
@@ -45,10 +46,10 @@ export class Dashboard1Component implements OnInit {
 				Key: '@PlayerId',
 				Label: 'Player',
 				Options: {
-					defaultValue: {PlayerId: null, PlayerFullName: 'Select Player...'},
-					textField: 'PlayerFullName',
+					defaultValue: {PlayerId: null, Email: 'Select Player...'},
+					textField: 'Email',
 					valueField: 'PlayerId',
-					dataSourceId: 125,
+					dataSourceId: 49,
 					data: [],
 					source: [],
 				},
@@ -61,9 +62,9 @@ export class Dashboard1Component implements OnInit {
 				Label: 'Team',
 				Options: {
 					defaultValue: 'Select Team(s)...',
-					textField: 'TeamName',
-					valueField: 'TeamId',
-					dataSourceId: 68,
+					textField: 'Label',
+					valueField: 'Id',
+					dataSourceId: 13,
 					data: [],
 					source: [],
 				},
@@ -73,14 +74,15 @@ export class Dashboard1Component implements OnInit {
 	}
 
 	private refreshViews(serializedFilters: string) {
-		const clientViewIds = [757, 758, 759]; // anaducks: ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db'];
+		const clientViewIds = ['c20e1498a367441', 'test-first-saved-dashboard-2', 'gps-daily-average-vs-game-demands']; // anaducks: ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db'];
 
 		this.isInProgress = true;
 		this.views = [];
+
 		forkJoin(clientViewIds.map(() => this.authService.getUserLoginLink()))
 			.subscribe((tokenResponses) => {
 				// eslint-disable-next-line @stylistic/max-len
-				this.views = tokenResponses.map((token: Record<string, any>, i) =>  this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/${clientViewIds[i]}?loginLink=${token.LinkToken}&filters=${serializedFilters}&fullScreen={"hideHeaderLogo":true}`));
+				this.views = tokenResponses.map((token: Record<string, any>, i) => this.sanitizer.bypassSecurityTrustResourceUrl(this.API_URL + `/view/${clientViewIds[i]}?loginLink=${token.LinkToken}&filters=${serializedFilters}&hideHeaders=true&fullScreen={"hideHeaderLogo":true}`));
 				this.isInProgress = false;
 			});
 	}

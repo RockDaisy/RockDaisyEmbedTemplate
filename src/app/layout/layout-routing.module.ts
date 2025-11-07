@@ -8,7 +8,7 @@ const routes: Routes = [
 		component: LayoutComponent,
 		children: [
 			{path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
-			{path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
+			{path: 'home', loadChildren: () => import('./dashboard1/dashboard1.module').then(m => m.Dashboard1PageModule)},
 			{path: 'dashboard1', loadChildren: () => import('./dashboard1/dashboard1.module').then(m => m.Dashboard1PageModule)},
 		]
 	}

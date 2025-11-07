@@ -1,18 +1,13 @@
 @use "../../../../styles/mixins";
 
 .filter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
   .k-form-field {
-    margin-bottom: 0;
-    margin-right: 10px;
-    display: inline-flex;
-    width: 250px;
-
-    @include mixins.respond-to(xs-sm) {
-      margin-bottom: 10px!important;
-    }
-
-    .k-widget {
-      width: 100%;
-    }
+    display: flex;
+    gap: 5px;
+    align-items: center;
   }
 }
