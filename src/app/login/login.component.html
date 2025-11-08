@@ -2,7 +2,7 @@
   <div class="login-page__content">
     <img class="login-page__content-logo" alt="Logo" src="/assets/images/logo-white.png" width="150"/>
 
-    <form (ngSubmit)="onSubmitForm($event)"
+    <form (ngSubmit)="onSubmitForm()"
           [formGroup]="loginForm"
           class="k-form k-form-sm" novalidate>
       @if (isInProgress) {

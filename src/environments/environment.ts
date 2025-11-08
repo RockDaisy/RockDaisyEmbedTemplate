@@ -4,5 +4,5 @@
 
 export const environment = {
 	production: false,
-	apiUrl: 'https://test.rockdaisy.com',
+	apiUrl: 'https://anaducks.rockdaisy.com',
 };

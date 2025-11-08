@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 		});
 	}
 
-	onSubmitForm(ev: Event): void {
+	onSubmitForm(): void {
 		this.error = '';
 
 		if(this.loginForm.valid) {
@@ -48,6 +48,10 @@ export class LoginComponent implements OnInit {
 			this.auth.authenticate(params)
 				.pipe(catchError((error: string): any => {
 					this.error = error || 'Server Error. Please try again later.';
+
+					if(this.error.trim() === 'Invalid one-time code (OTP) entered. Try again or generate a new one.') {
+						this.error = 'OTP-enabled accounts are not supported. Use credentials without OTP authentication.';
+					}
 
 					this.isInProgress = false;
 

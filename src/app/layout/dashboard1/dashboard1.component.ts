@@ -3,7 +3,7 @@ import {environment} from '../../../environments/environment';
 import {AppFilter, FilterType} from '../../shared/components/filter/models/filter';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {AuthService, FiltersService} from '../../shared';
-import {forkJoin, of} from 'rxjs';
+import {forkJoin } from 'rxjs';
 
 @Component({
 	selector: 'app-dashboard1-page',
@@ -74,7 +74,7 @@ export class Dashboard1Component implements OnInit {
 	}
 
 	private refreshViews(serializedFilters: string) {
-		const clientViewIds = ['c20e1498a367441', 'test-first-saved-dashboard-2', 'gps-daily-average-vs-game-demands']; // anaducks: ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db'];
+		const clientViewIds = ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db']; // test: ['c20e1498a367441', 'test-first-saved-dashboard-2', 'gps-daily-average-vs-game-demands'];
 
 		this.isInProgress = true;
 		this.views = [];
