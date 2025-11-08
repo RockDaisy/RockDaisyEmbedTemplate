@@ -37,7 +37,8 @@
                 "glob": "**/*",
                 "input": "src/assets/",
                 "output": "/assets/"
-              }
+              },
+              "src/Web.config"
             ],
             "styles": [
               "src/styles/app.scss"
