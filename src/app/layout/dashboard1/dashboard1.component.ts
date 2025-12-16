@@ -74,7 +74,7 @@ export class Dashboard1Component implements OnInit {
 	}
 
 	private refreshViews(serializedFilters: string) {
-		const clientViewIds = ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db']; // test: ['c20e1498a367441', 'test-first-saved-dashboard-2', 'gps-daily-average-vs-game-demands'];
+		const clientViewIds = ['c20e1498a367441', 'test-first-saved-dashboard-2', 'gps-daily-average-vs-game-demands']; // anaducks: ['pregame-report', 'scouting-pregame-report', '2aa0238d9c274db'];
 
 		this.isInProgress = true;
 		this.views = [];
